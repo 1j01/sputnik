@@ -89,10 +89,10 @@ module.exports = function (osName, destDir, url) {
     .then(function (downloadedFilePath) {
         return unpack(osName, downloadedFilePath);
     })
-    /*.then(function () {
+    .then(function () {
         // Remove temp dir
         return jetpack.dirAsync(downloadDir, { exists: false });
-    })*/
+    })
     .then(qd.resolve);
     
     return qd.promise;

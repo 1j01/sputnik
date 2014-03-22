@@ -23,7 +23,7 @@ var haveToInstall = false;
 
 // Check if any runtime installed for this OS
 try {
-    var manifest = jetpack.read(manifestPath);
+    var manifest = jetpack.read(manifestPath, 'json');
     // Might be installed but obsolete
     haveToInstall = (pkg.nw.version !== manifest.version);
 } catch (err) {
