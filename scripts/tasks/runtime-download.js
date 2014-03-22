@@ -67,13 +67,13 @@ function unpack(osName, downloadedFilePath) {
                 processCallback);
             break;
         case 'mac':
-            childProcess.execFile("unzip",
+            childProcess.exec("unzip",
                 [downloadedFilePath, "-d " + __dirname + "/../../nw/mac"],
                 processCallback);
             break;
         case 'lnx':
             // Untar the content of root directory (nw archive for linux is packed with directory inside)
-            childProcess.execFile("tar",
+            childProcess.exec("tar",
                 ["-zxf", downloadedFilePath, "--strip-components=1", "-C", __dirname + "/../../nw/lnx"],
                 processCallback);
             break;
