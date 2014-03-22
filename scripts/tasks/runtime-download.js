@@ -15,7 +15,7 @@ function download(url) {
     var fileName = url.substr(url.lastIndexOf('/'));
     var downloadFile = pathUtil.join(downloadDir, fileName);
     
-    /*jetpack.dir(downloadDir, { empty: true });
+    jetpack.dir(downloadDir, { empty: true });
     
     console.log('Downloading: ' + url);
     process.stdout.write('Progress: 0%');
@@ -38,9 +38,9 @@ function download(url) {
     .on('close', function () {
         process.stdout.clearLine();
         process.stdout.cursorTo(0);
-        console.log('Progress: 100%');*/
+        console.log('Progress: 100%');
         qd.resolve(downloadFile);
-    //})
+    })
     
     return qd.promise;
 }
