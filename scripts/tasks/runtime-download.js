@@ -1,3 +1,7 @@
+/**
+ * Downloads node-webkit runtime for your OS and unpacks it into proper place inside the project.
+ */
+
 "use strict";
 
 var fs = require('fs');
@@ -45,37 +49,38 @@ function download(url) {
     return qd.promise;
 }
 
-function unpack(osName, downloadedFilePath) {
+function unpack(osName, downloadedFilePath, destDir) {
     var qd = Q.defer();
     
     process.stdout.write('Unpacking... ')
     
     function processCallback(error, stdout, stderr) {
-        if (error) {
+        if (error || stderr) {
             console.log(error);
+            console.log(stderr);
         } else {
             console.log('Done!');
             qd.resolve();
         }
     }
     
+    var command;
     switch (osName) {
         case 'win':
             // Unzip with 7zip
-            childProcess.execFile(__dirname + "/../../os/win/7zip/7za.exe",
-                ["x", downloadedFilePath, "-o" + __dirname + "/../../nw/win"],
+            command = pathUtil.resolve(__dirname + "/../../os/win/7zip/7za.exe");
+            childProcess.execFile(command,
+                ["x", downloadedFilePath, "-o" + destDir],
                 processCallback);
             break;
         case 'mac':
-            childProcess.exec("unzip",
-                [downloadedFilePath, "-d " + __dirname + "/../../nw/mac"],
-                processCallback);
+            command = "unzip " + downloadedFilePath + " -d " + destDir;
+            childProcess.exec(command, processCallback);
             break;
         case 'lnx':
             // Untar the content of root directory (nw archive for linux is packed with directory inside)
-            childProcess.exec("tar",
-                ["-zxf", downloadedFilePath, "--strip-components=1", "-C", __dirname + "/../../nw/lnx"],
-                processCallback);
+            command = "tar -zxf " + downloadedFilePath + " --strip-components=1 -C " + destDir;
+            childProcess.exec(command, processCallback);
             break;
     }
     
@@ -85,9 +90,11 @@ function unpack(osName, downloadedFilePath) {
 module.exports = function (osName, destDir, url) {
     var qd = Q.defer();
     
+    jetpack.dir(destDir, { empty: true });
+    
     download(url)
     .then(function (downloadedFilePath) {
-        return unpack(osName, downloadedFilePath);
+        return unpack(osName, downloadedFilePath, destDir);
     })
     .then(function () {
         // Remove temp dir

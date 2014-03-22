@@ -5,7 +5,7 @@
 "use strict";
 
 var jetpack = require('fs-jetpack');
-var runtimeDownload = require('./tasks/runtime-download');
+var pathUtil = require('path');
 
 var pkg = jetpack.read('../Sputnik/package.json', 'json');
 
@@ -16,8 +16,8 @@ var osMap = {
     "linux": "lnx",
 };
 var osName = osMap[process.platform];
-var destDir = '../nw/' + osName;
-var manifestPath = destDir + '/manifest.json';
+var destDir = pathUtil.resolve(__dirname, '../nw/', osName);
+var manifestPath = pathUtil.join(destDir, 'manifest.json');
 
 var haveToInstall = false;
 
@@ -32,9 +32,9 @@ try {
 }
 
 if (haveToInstall) {
-    console.log('Updating runtime...')
+    var runtimeDownload = require('./tasks/runtime-download');
     
-    jetpack.dir(destDir, { empty: true });
+    console.log('Installing runtime...')
     
     var url = pkg.nw[osName];
     
@@ -45,7 +45,7 @@ if (haveToInstall) {
             version: pkg.nw.version
         });
        
-       console.log('Runtime installed and up to date!');
+       console.log('Runtime installed!');
     });
 } else {
     console.log('Runtime is ok!');
