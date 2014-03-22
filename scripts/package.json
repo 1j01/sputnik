@@ -1,0 +1,11 @@
+{
+  "name": "SputnikBuildScripts",
+  "version": "0.0.0",
+  "dependencies": {
+    "fs-jetpack": "*",
+    "less": "1.7.x",
+    "request": "2.x.x",
+    "request-progress": "0.3.x",
+    "q": "1.x.x"
+  }
+}

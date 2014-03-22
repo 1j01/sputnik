@@ -1,0 +1,33 @@
+{
+  "name": "Sputnik",
+  "main": "app/app.html",
+  "version": "2.0.0",
+  "nw": {
+    "version": "0.9.2",
+    "lnx": "http://dl.node-webkit.org/v0.9.2/node-webkit-v0.9.2-linux-x64.tar.gz",
+    "mac": "http://dl.node-webkit.org/v0.9.2/node-webkit-v0.9.2-osx-ia32.zip",
+    "win": "http://dl.node-webkit.org/v0.9.2/node-webkit-v0.9.2-win-ia32.zip"
+  },
+  "webkit": {
+    "plugin": false
+  },
+  "window": {
+    "icon": "app/img/icon.png",
+    "show": false,
+    "toolbar": false,
+    "width": 1000,
+    "height": 660,
+    "position": "center",
+    "min_width": 800,
+    "min_height": 400
+  },
+  "dependencies": {
+    "cheerio": "0.13.1",
+    "feedparser": "0.16.6",
+    "iconv-lite": "0.2.11",
+    "nedb": "0.10.4",
+    "q": "1.0.0",
+    "xmlbuilder": "2.1.0",
+    "xmldoc": "0.1.2"
+  }
+}
