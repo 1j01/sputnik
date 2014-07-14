@@ -21,4 +21,8 @@ function run(from, to) {
     });
 }
 
+if (!fs.existsSync('../app/visual/css')) {
+    fs.mkdirSync('../app/visual/css');
+}
+
 run('../src/less/main.less', '../app/visual/css/main.css');
